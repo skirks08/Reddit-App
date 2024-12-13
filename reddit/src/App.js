@@ -2,6 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  // Function to fetch data from Reddit
+  const fetchRedditPosts = async () => {
+    const response = await fetch('https://www.reddit.com/r/all/top.json');
+    const data = await response.json();
+    return data.data.children;
+  };
+
   return (
     <div className="App">
       <header className="App-header">
