@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../Slices/postsSlice';
+import { fetchPosts, setSearchTerm } from '../Slices/postsSlice';
 
 const postList = () => {
     const dispatch = useDispatch();
@@ -14,6 +14,10 @@ const postList = () => {
         };
         getPosts();
     }, [dispatch]);
+
+    const filteredPosts = posts.filter((post) => 
+        post.data.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div>
