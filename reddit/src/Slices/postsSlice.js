@@ -6,6 +6,7 @@ const postsSlice = createSlice({
     initialState: {
         posts: [],
         searchTerm: '',
+        selectedCategory: '',
     },
     reducers: {
         fetchPosts: (state, action) => {
@@ -13,6 +14,9 @@ const postsSlice = createSlice({
         },
         setSearchTerm: (state, action) => {
             state.searchTerm = action.payload;
+        },
+        setCategory: (state, action) => {
+            state.selectedCategory = action.payload;
         },
     },
 });
