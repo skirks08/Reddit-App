@@ -1,5 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import postList from './Components/postList';
+import postDetail from './Components/postDetail';
 
 function App() {
   // Function to fetch data from Reddit
@@ -12,8 +15,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<postList />} />
-        <Route path="/post/:id" element={<postDetail />} />
+        <Route path="/" element={postList} />
+        <Route path="/post/:id" element={postDetail} />
       </Routes>
     </Router>
   );
