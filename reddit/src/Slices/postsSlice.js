@@ -3,7 +3,13 @@ import fetchFromReddit from '../utilities/redditApi';
 
 export const fetchPosts = createAsyncThunk(
     'posts/fetchPosts',
-    async (subreddit, { rejectWithValue }) => {
+    async (subreddit, { rejectWithValue, getState }) => {
+        const cache = getState().posts.cache;
+
+        if (cache[subreddit]) {
+            return cache[subreddit];
+        }
+
         try {
             const data = await fetchFromReddit(`/r/${subreddit}.json`);
             return data.data.children.map((child) => child.data);
