@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, setSearchTerm } from '../Slices/postsSlice';
+import { Link } from 'react-router-dom';
 
 const postList = () => {
     const dispatch = useDispatch();
@@ -36,7 +37,9 @@ const postList = () => {
           <div>
             {filteredPosts.map((post) => (
                 <div key={post.data.id}>
+                  <Link to={`/post/${post.data.id}`}>
                     <h3>{post.data.title}</h3>
+                  </Link>
                     <p>{post.data.selftext}</p>
                 </div>
             ))}
