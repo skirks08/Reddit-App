@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, setSearchTerm } from '../Slices/postsSlice';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const postList = () => {
     const dispatch = useDispatch();
@@ -16,9 +18,11 @@ const postList = () => {
         return <p>Loading...</p>
     };
 
-    if (status === 'failed') {
-        return <p>Error: {error}</p>
-    }
+    useEffect(() => {
+        if (status === 'failed') {
+            toast.error(`Error: ${error}`);
+        }
+    }, [status, error]);
 
     const handleCategoryChange = (event) => {
         dispatch(setCategory(event.target.value));
