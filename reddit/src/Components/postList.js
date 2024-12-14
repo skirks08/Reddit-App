@@ -1,10 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, setSearchTerm } from '../Slices/postsSlice';
 
 const postList = () => {
     const dispatch = useDispatch();
     const posts = useSelector((state) => state.posts.posts);
+    const selectedCategory = useSelector((state) => state.posts.selectedCategory);
+
+    const handleCategoryChange = (event) => {
+        dispatch(setCategory(event.target.value));
+    };
 
     useEffect(() => {
         const getPosts = async () => {
@@ -15,18 +20,27 @@ const postList = () => {
         getPosts();
     }, [dispatch]);
 
-    const filteredPosts = posts.filter((post) => 
-        post.data.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredPosts = posts.filter((post) => {
+        const matchesSearch = post.data.title.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = selectedCategory ? post.data.subreddit === selectedCategory : true;
+        return matchesSearch && matchesCategory;
+    });
 
     return (
         <div>
-            {posts.map((post) => (
+            <select onChange={handleCategoryChange} value={selectedCategory}>
+                <option value="">All Categories</option>
+                <option value="news">News</option>
+                <option value="funny">Funny</option>
+            </select>
+          <div>
+            {filteredPosts.map((post) => (
                 <div key={post.data.id}>
                     <h3>{post.data.title}</h3>
                     <p>{post.data.selftext}</p>
                 </div>
             ))}
+        </div>
         </div>
     );
 };
