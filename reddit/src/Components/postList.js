@@ -5,8 +5,9 @@ import { Link } from 'react-router-dom';
 
 const postList = () => {
     const dispatch = useDispatch();
-    const posts = useSelector((state) => state.posts.posts);
+    const { posts, status, error } = useSelector((state) => state.posts);
     const selectedCategory = useSelector((state) => state.posts.selectedCategory);
+
 
     const handleCategoryChange = (event) => {
         dispatch(setCategory(event.target.value));
