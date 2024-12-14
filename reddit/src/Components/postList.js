@@ -8,6 +8,17 @@ const postList = () => {
     const { posts, status, error } = useSelector((state) => state.posts);
     const selectedCategory = useSelector((state) => state.posts.selectedCategory);
 
+    useEffect(() => {
+        dispatch(fetchPosts('all'));
+    }, [dispatch]);
+
+    if (status === 'loading') {
+        return <p>Loading...</p>
+    };
+
+    if (status === 'failed') {
+        return <p>Error: {error}</p>
+    }
 
     const handleCategoryChange = (event) => {
         dispatch(setCategory(event.target.value));
@@ -41,7 +52,7 @@ const postList = () => {
                   <Link to={`/post/${post.data.id}`}>
                     <h3>{post.data.title}</h3>
                   </Link>
-                    <p>{post.data.selftext}</p>
+                    <p>{post.data.selftext || 'No content available'}</p>
                 </div>
             ))}
         </div>
